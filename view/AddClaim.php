@@ -10,6 +10,10 @@
     $database->addClaim($_POST);
     # Add validation later, but for now just redirect
     header('Location: ClaimAdded.php');
+  } else {
+    # first time visitor so show the form
+    $insuredList = $database->getAllInsured();
+    $insurerList = $database->getAllInsurer();
   }
 ?>
 <html lang="en">
@@ -62,11 +66,11 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quick Actions <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Add Claim</a></li>
+                <li><a href="http://localhost/mminsurance.com/view/AddClaim.php">Add Claim</a></li>
                 <li><a href="#">Add Attachment</a></li>
                 <li role="separator" class="divider"></li>                
                 <li><a href="http://localhost/mminsurance.com/view/AddInsured.php">Add Insured</a></li>
-                <li><a href="http://localhost/mminsurance.com/view/AddInsurer.php">Add Insurer</a></li>
+                <li><a href="http://localhost/mminsurance.com/view/AddInsurer.php">Add Insurance Company</a></li>
               </ul>
             </li>          
             <form class="navbar-form navbar-left" role="search">
@@ -79,60 +83,90 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+    <!--++++++++++++++++++++++++++++++++++++++++-->
+    <!--                                        -->
+    <!--            End Nav Section             -->
+    <!--                                        -->
+    <!--++++++++++++++++++++++++++++++++++++++++-->
     <div class="row well well-sm">
       <h1>M&amp;M Add Claim</h1>
     </div><!-- end row well well-sm -->
       <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
+        <div class="form-group col-lg-6">        
+          <label for="insuredID">Select Insured Party</label>
+          <select type="text" class="form-control" id="insuredID" name="insuredID">
+            <?php
+              foreach($insuredList as $insuredParty) {
+                $firstName = $insuredParty['firstName'];
+                if (strlen($firstName) > 0) {
+                  $firstName = ", ". $firstName; 
+                }
+                echo("<option value='". $insuredParty['insuredID'] ."'>". $insuredParty['lastName'] . $firstName ."</option>\n");
+              }
+            ?>
+          </select>
+        </div>
+
+        <div class="form-group col-lg-6">        
+          <label for="insurerID">Select Insurance Company</label>
+          <select type="text" class="form-control" id="insurerID" name="insurerID">
+            <?php
+              foreach($insurerList as $insurerCompany) {
+                echo("<option value='". $insurerCompany['insurerID'] ."'>". $insurerCompany['businessName'] . " ". $insurerCompany['address'] ."</option>\n");
+              }
+            ?>
+          </select>
+        </div>
         <div class="form-group col-lg-6">
-          <label for="firstName">First Name</label> (Leave blank for business entries)
-          <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Jane">
-        </div>     
+          <label for="policyNumber">Insurance Policy Number</label>
+          <input type="text" class="form-control" id="policyNumber" name="policyNumber" placeholder="WDC-216-332">
+        </div> 
         <div class="form-group col-lg-6">
-          <label for="lastName">Last Name or Business Name</label>
-          <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Doe">
-        </div> 
-        <div class="form-group col-lg-4">
-          <label for="phone">Phone</label>
-          <input type="phone" class="form-control" id="phone" name="phone" placeholder="800-555-1212">
-        </div>    
-        <div class="form-group col-lg-4">
-          <label for="cell">Cell</label>
-          <input type="cell" class="form-control" id="cell" name="cell" placeholder="800-555-1212">
-        </div>             
-        <div class="form-group col-lg-4">
-          <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Jane@Doe.com">
+          <label for="insurerClaimNumber">Insurance Company Claim Number</label>
+          <input type="text" class="form-control" id="insurerClaimNumber" name="insurerClaimNumber" placeholder="123-12345">
         </div>
-        <div class="form-group col-lg-4">
-          <label for="address">Street address</label>
-          <input type="address" class="form-control" id="address" name="address" placeholder="123 Main Street">
+        <div class="form-group col-lg-6">
+          <label for="dateOfLoss">Date of Loss</label>
+          <input type="date" class="form-control" id="dateOfLoss" name="dateOfLoss" placeholder="02/22/2020">
         </div>
-        <div class="form-group col-lg-4">
-          <label for="city">City</label>
-          <input type="city" class="form-control" id="city" name="city" placeholder="Anytown">
-        </div> 
-        <div class="form-group col-lg-4">
-          <label for="state">State</label>
-          <input type="state" class="form-control" id="state" name="state" placeholder="Florida">
+        <div class="form-group col-lg-6">
+          <label for="dateReported">Date Reported</label>
+          <input type="date" class="form-control" id="dateReported" name="dateReported" placeholder="02/25/2020">
         </div>
-        <div class="form-group col-lg-4">
-          <label for="county">County</label>
-          <input type="county" class="form-control" id="county" name="county" placeholder="Seminole County">
+        <div class="form-group col-lg-6">
+          <label for="timeOfLoss">Time of loss</label>
+          <input type="time" class="form-control" id="timeOfLoss" name="timeOfLoss" placeholder="6:45pm">
         </div>
-        <div class="form-group col-lg-4">
-          <label for="country">Country</label>
-          <input type="country" class="form-control" id="country" name="country" placeholder="United States">
+        <div class="form-group col-lg-6">
+          <label for="grossLossValue">Gross Loss Value</label>
+          <input type="text" class="form-control" id="grossLossValue" name="grossLossValue" placeholder="$2,500.00">
         </div>
-        <div class="form-group col-lg-4">
-          <label for="postcode">Zip/Postcode</label>
-          <input type="postcode" class="form-control" id="postcode" name="postcode" placeholder="12345">
-        </div>                  
+        <div class="form-group col-lg-6">
+          <label for="actualCashValue">Actual Cash Value</label>
+          <input type="text" class="form-control" id="actualCashValue" name="actualCashValue" placeholder="$1,750.00">
+        </div>
+        <div class="form-group col-lg-6">
+          <label for="replacementCost">Replacement Cost</label>
+          <input type="text" class="form-control" id="replacementCost" name="replacementCost" placeholder="$2,750.00">
+        </div>
+        <div class="form-group col-lg-6">
+          <label for="lossDescription">Loss description</label>
+          <input type="text" class="form-control" id="lossDescription" name="lossDescription" placeholder="The loss was...">
+        </div>
+        <div class="form-group col-lg-6">
+          <label for="lossLocation">Loss location</label>
+          <input type="text" class="form-control" id="lossLocation" name="lossLocation" placeholder="The loss was located at...">
+        </div>
+        <div class="form-group col-lg-6">
+          <label for="lossCounty">County loss occurred in</label>
+          <input type="text" class="form-control" id="lossCounty" name="lossCounty" placeholder="Seminole County">
+        </div>
+        <div class="form-group col-lg-6">
+          <label for="lossNotes">Any additional details</label>
+          <input type="text" class="form-control" id="lossNotes" name="lossNotes" placeholder="Notes go here">
+        </div                       
         <div class="form-group col-lg-12">        
-          <label for="notes">Additional Details</label>
-          <input type="notes" class="form-control" id="notes" name="notes" placeholder="Boots, boots, marching up and down again.">
-        </div> 
-        <div class="form-group col-lg-12">        
-          <button type="submit" class="btn btn-default">Add Insured</button>
+          <button type="submit" class="btn btn-default">Add Claim</button>
         </div> 
       </form>    
     </div><!-- end container -->

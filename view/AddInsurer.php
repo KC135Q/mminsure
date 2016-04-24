@@ -18,7 +18,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Add Insurer</title>
+    <title>Add Insurance Company</title>
 
     <!-- Bootstrap -->
     <link href="http://localhost/mminsurance.com//css/bootstrap.min.css" rel="stylesheet">
@@ -62,11 +62,11 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quick Actions <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Add Claim</a></li>
+                <li><a href="http://localhost/mminsurance.com/view/AddClaim.php">Add Claim</a></li>
                 <li><a href="#">Add Attachment</a></li>
                 <li role="separator" class="divider"></li>                
                 <li><a href="http://localhost/mminsurance.com/view/AddInsured.php">Add Insured</a></li>
-                <li><a href="http://localhost/mminsurance.com/view/AddInsurer.php">Add Insurer</a></li>
+                <li><a href="http://localhost/mminsurance.com/view/AddInsurer.php">Add Insurance Company</a></li>
               </ul>
             </li>          
             <form class="navbar-form navbar-left" role="search">
@@ -80,7 +80,7 @@
       </div><!-- /.container-fluid -->
     </nav>
     <div class="row well well-sm">
-      <h1>M&amp;M Add Insurer</h1>
+      <h1>M&amp;M Add Insurance Company</h1>
     </div><!-- end row well well-sm -->
       <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
         <div class="form-group col-lg-6">
@@ -128,7 +128,7 @@
           <input type="notes" class="form-control" id="notes" name="notes" placeholder="Boots, boots, marching up and down again.">
         </div>
         <div class="form-group col-lg-12">        
-          <button type="submit" class="btn btn-default">Add Insurer</button>
+          <button type="submit" class="btn btn-default">Add Insurance Company</button>
         </div>                                       
 
       </form>    

@@ -72,6 +72,14 @@
 		public function lastInsertId(){
 		    return $this->dbh->lastInsertId();
 		}		
+		public function addClaim($inputs) {
+			$claimArray = array("insurerID", "insuredID", "policyNumber", "insurerClaimNumber", "dateOfLoss", "dateReported", "timeOfLoss", "grossLossValue", "actualCashValue", "replacementCost", "lossDescription", "lossLocation", "lossCounty", "lossNotes");;
+			$this->query('INSERT INTO claim (insurerID, insuredID, policyNumber, insurerClaimNumber, dateOfLoss, dateReported, timeOfLoss, grossLossValue, actualCashValue, replacementCost, lossDescription, lossLocation, lossCounty, lossNotes) VALUES (:insurerID, :insuredID, :policyNumber, :insurerClaimNumber, :dateOfLoss, :datereported, :timeOfLoss, :grossLossValue, :actualCashValue, :replacementCost, :lossDescription, :lossLocation, :lossCounty, :lossNotes) ');
+			foreach ($claimArray as $key) {
+				$this->bind(":$key", "$inputs[$key]");
+			}
+			$this->execute();
+		}
 
 		public function addInsured($inputs) {
 			$insuredArray = array("lastName", "firstName", "phone", "cell", "email", "address", "city", "state", "county", "country", "postcode", "notes");
@@ -102,5 +110,17 @@
 			$this->bind(':insurerID', $insurerID);
 			$row = $this->single();
 			return $row;
-		}		
+		}
+
+		public function getAllInsured() {
+			$this->query('SELECT * FROM insured');
+			$rows = $this->resultset();
+			return $rows;			
+		}
+
+		public function getAllInsurer() {
+			$this->query('SELECT * FROM insurer');
+			$rows = $this->resultset();
+			return $rows;
+		}			
   }
