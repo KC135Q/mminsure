@@ -4,7 +4,7 @@
   include "../model/database.php";
   $database = new Database();
   $addedID = $database->lastInsertId();
-  $insured = $database->getInsured($addedID);
+  $insured = $database->getInsurer($addedID);
 ?>
 <html lang="en">
   <head>
@@ -40,7 +40,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://localhost/mminsurance.com/index.php">
+          <a class="navbar-brand" href="/mminsurance.com/index.php">
             <img src="../images/MM-Logo.png" height='30px' width='30px' alt="M&amp;M Logo">
           </a>
         </div>
@@ -58,9 +58,9 @@
               <ul class="dropdown-menu">
                 <li><a href="#">Add Claim</a></li>
                 <li><a href="#">Add Attachment</a></li>
+                <li role="separator" class="divider"></li>                
                 <li><a href="http://localhost/mminsurance.com/view/AddInsured.php">Add Insured</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">What?</a></li>
+                <li><a href="http://localhost/mminsurance.com/view/AddInsurer.php">Add Insurer</a></li>
               </ul>
             </li>          
             <form class="navbar-form navbar-left" role="search">
@@ -78,26 +78,26 @@
     </div><!-- end row well well-sm -->
       <ul class="list-group col-lg-6">
         <li class="list-group-item">
-          <span class="badge">Name</span>
-          <?php
-            if (strlen($insured["firstName"]) > 0) {
-              echo ($insured["firstName"].' ');    
-            }
-            echo ($insured["lastName"]);
-           ?>
+          <span class="badge">Business Name</span>
+          <?=$insured["businessName"]?>
         </li>
+        <li class="list-group-item">
+          <span class="badge">Business Representative</span>
+          <?=$insured["repName"]?>
+        </li>        
         <li class="list-group-item">
           <span class="badge">Phone</span>
           <?=$insured["phone"]?>
         </li>
-        <li class="list-group-item">
-          <span class="badge">Cell</span>
-          <?=$insured["cell"]?>
-        </li>
+
         <li class="list-group-item">
           <span class="badge">Email address</span>
           <?=$insured["email"]?>
         </li>
+        <li class="list-group-item">
+          <span class="badge">Website</span>
+          <a href='<?=$insured["website"]?>' target="_blank"><?=$insured["website"]?></a>
+        </li>        
         <li class="list-group-item">
           <span class="badge">Address</span>
           <?php 
@@ -105,18 +105,18 @@
            ?>
         </li>
         <li class="list-group-item">
-          <span class="badge">County</span>
-          <?=$insured["county"]?>
-        </li>
-        <li class="list-group-item">
           <span class="badge">Country</span>
           <?=$insured["country"]?>
+        </li>
+        <li class="list-group-item">
+          <span class="badge">Additional Details</span>
+          <?=$insured["notes"]?>
         </li>
       </ul>
     </div><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/mminsurance.com/js/bootstrap.min.js"></script>
   </body>
 </html>

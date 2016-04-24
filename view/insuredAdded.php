@@ -58,9 +58,9 @@
               <ul class="dropdown-menu">
                 <li><a href="#">Add Claim</a></li>
                 <li><a href="#">Add Attachment</a></li>
+                <li role="separator" class="divider"></li>                
                 <li><a href="http://localhost/mminsurance.com/view/AddInsured.php">Add Insured</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">What?</a></li>
+                <li><a href="http://localhost/mminsurance.com/view/AddInsurer.php">Add Insurer</a></li>
               </ul>
             </li>          
             <form class="navbar-form navbar-left" role="search">
@@ -73,6 +73,9 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+
+    <!-- End Nav Section -->
+
     <div class="row well well-sm">
       <h1>M&amp;M Insured Added</h1>
     </div><!-- end row well well-sm -->
@@ -112,11 +115,15 @@
           <span class="badge">Country</span>
           <?=$insured["country"]?>
         </li>
+        <li class="list-group-item">
+          <span class="badge">Notes</span>
+          <?=$insured["notes"]?>
+        </li>        
       </ul>
     </div><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/mminsurance.com/js/bootstrap.min.js"></script>
   </body>
 </html>

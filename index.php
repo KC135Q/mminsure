@@ -12,10 +12,10 @@
     <title>M&amp;M Insurance Claims</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/mminsurance.com/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Override -->
-    <link href="css/bootstrap-override.css" rel="stylesheet">
+    <link href="/mminsurance.com/css/bootstrap-override.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,7 +73,7 @@
       <div class="jumbotron">
         <h1 class="row">
           <span class="col-lg-2"><img src="images/MM-Logo.png" alt="M &amp;M Logo"></span>
-          <span class="col-lg-10">M&amp;M Insurance Claims</span>
+          <span class="col-lg-10">M&amp;M Insurance Services Claims Management System</span>
         </h1>
       </div><!-- end jumbotron -->
       <div class="row claim-list">

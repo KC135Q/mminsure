@@ -7,9 +7,9 @@
   # Check form submitted?
   if($_SERVER['REQUEST_METHOD'] == 'POST') {
     # process form
-    $database->addInsured($_POST);
+    $database->addClaim($_POST);
     # Add validation later, but for now just redirect
-    header('Location: InsuredAdded.php');
+    header('Location: ClaimAdded.php');
   }
 ?>
 <html lang="en">
@@ -18,7 +18,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Add Insured</title>
+    <title>Add Claim</title>
 
     <!-- Bootstrap -->
     <link href="/mminsurance.com/css/bootstrap.min.css" rel="stylesheet">
@@ -80,7 +80,7 @@
       </div><!-- /.container-fluid -->
     </nav>
     <div class="row well well-sm">
-      <h1>M&amp;M Add Insured</h1>
+      <h1>M&amp;M Add Claim</h1>
     </div><!-- end row well well-sm -->
       <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
         <div class="form-group col-lg-6">

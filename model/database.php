@@ -74,8 +74,8 @@
 		}		
 
 		public function addInsured($inputs) {
-			$insuredArray = array("lastName", "firstName", "phone", "cell", "email", "address", "city", "state", "county", "country", "postcode");
-			$this->query('INSERT INTO insured (lastName, firstName, phone, cell, email, address, city, state, county, country, postcode) VALUES (:lastName, :firstName, :phone, :cell, :email, :address, :city, :state, :county, :country, :postcode) ');
+			$insuredArray = array("lastName", "firstName", "phone", "cell", "email", "address", "city", "state", "county", "country", "postcode", "notes");
+			$this->query('INSERT INTO insured (lastName, firstName, phone, cell, email, address, city, state, county, country, postcode, notes) VALUES (:lastName, :firstName, :phone, :cell, :email, :address, :city, :state, :county, :country, :postcode, :notes) ');
 			foreach ($insuredArray as $key) {
 				$this->bind(":$key", "$inputs[$key]");
 			}
@@ -88,4 +88,19 @@
 			$row = $this->single();
 			return $row;
 		}
+		public function addInsurer($inputs) {
+			$insuredArray = array("businessName", "repName", "phone", "email", "website", "address", "city", "state", "country", "postcode", "notes");
+			$this->query('INSERT INTO insurer (businessName, repName, phone, email, website, address, city, state, country, postcode, notes) VALUES (:businessName, :repName, :phone, :email, :website, :address, :city, :state, :country, :postcode, :notes) ');
+			foreach ($insuredArray as $key) {
+				$this->bind(":$key", "$inputs[$key]");
+			}
+			$this->execute();
+		}
+
+		public function getInsurer($insurerID) {
+			$this->query('SELECT * FROM insurer WHERE insurerID = :insurerID');
+			$this->bind(':insurerID', $insurerID);
+			$row = $this->single();
+			return $row;
+		}		
   }
