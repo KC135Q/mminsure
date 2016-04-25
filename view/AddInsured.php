@@ -54,7 +54,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#">General Claims</a></li>
+            <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">All Claims</a></li>
             <li><a href="#">Attachment</a></li>
             <li><a href="#">Time</a></li>
           </ul>
@@ -137,7 +137,7 @@
       </form>    
     </div><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../js/jquery-1-11-3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/mminsurance.com/js/bootstrap.min.js"></script>
   </body>

@@ -2,6 +2,7 @@
 <?php
   include "config/config.php";
   include "model/database.php";
+  $database = new Database();
 ?>
 <html lang="en">
   <head>
@@ -12,10 +13,10 @@
     <title>M&amp;M Insurance Claims</title>
 
     <!-- Bootstrap -->
-    <link href="/mminsurance.com/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Override -->
-    <link href="/mminsurance.com/css/bootstrap-override.css" rel="stylesheet">
+    <link href="css/bootstrap-override.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,7 +46,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#">General Claims</a></li>
+            <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">All Claims</a></li>
             <li><a href="#">Attachment</a></li>
             <li><a href="#">Time</a></li>
           </ul>
@@ -70,6 +71,9 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!--                          END NAV SECTION                              -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
       <div class="jumbotron">
         <h1 class="row">
           <span class="col-lg-2"><img src="images/MM-Logo.png" alt="M &amp;M Logo"></span>
@@ -79,62 +83,78 @@
       <div class="row claim-list">
         <h3>Open Claims</h3>
         <div class="row open-claims well well-sm">
-          <div class="col-lg-2 claim-number">
-            <p>Claim Number</p>
+          <div class="col-lg-1 claim-number">
+            <p>Number</p>
           </div>
           <div class="col-lg-1 date-of-loss">
-            <p>Date of Loss</p>
+            <p>Loss date</p>
           </div>
           <div class="col-lg-1 date-claimed">
-            <p>Date Received</p>
+            <p>Claim date</p>
           </div>
           <div class="col-lg-2 insured">
             <p>Insured</p>
-          </div>                    
-          <div class="col-lg-1 zip-pc">
-            <p>Zip/PC</p>
-          </div>        
-          <div class="col-lg-2 insurer">
+          </div>                          
+          <div class="col-lg-3 insurer">
             <p>Insurer</p>
           </div>
-          <div class="col-lg-3 adjuster">
+          <div class="col-lg-2 adjuster">
             <p>Adjuster</p>
-          </div>                    
+          </div>
+          <div class="col-lg-2 claim-age">
+            <p>Claim age</p>
+          </div>                   
         </div><!-- end row open-claims -->
         <?php
-          for ($i = 0; $i < 5; $i++) {
+          $openClaims = $database->getClaimsByStatus('Open');
+          if (empty ($openClaims)) {
+          ?>
+            <div class="row no-claims col-lg-12">
+              <h3>No open claims at this time.</h3>
+            </div>
+          <?php 
+          }
+          foreach ($openClaims as $claim) {
+            // echo("<pre>");
+            // var_dump($claim);
         ?>
         <div class="row claims-list ">
-          <div class="col-lg-2 claim-number">
-            <p><a href="#">ABC123</a></p>
+          <div class="col-lg-1 claim-number">
+            <p>
+              <a href="http://localhost/mminsurance.com/view/ClaimDetails.php?claimID=<?=$claim['claimID']?>"><?= $claim['claimID'] ?></a>
+            </p>
           </div>
           <div class="col-lg-1 date-of-loss">
-            <p>02/03/04</p>
+            <p><?= date('m/d/Y' ,strtotime($claim['dateOfLoss'])) ?></p>
           </div>
           <div class="col-lg-1 date-claimed">
-            <p>02/03/24</p>
+            <p><?= date('m/d/Y' ,strtotime($claim['dateReported'])) ?></p>
           </div>
           <div class="col-lg-2 insured">
-            <p>Kaltenbaugh, Daniel</p>
-          </div>                    
-          <div class="col-lg-1 zip-pc">
-            <p>32708</p>
-          </div>        
-          <div class="col-lg-2 insurer">
-            <p><a href="#">USAA</a></p>
+            <p><?= $claim['lastName'] . ' ' . $claim['firstName'] ?></p>
+          </div>                           
+          <div class="col-lg-3 insurer">
+            <p><a href="<?= $claim['insurerWebsite'] ?>" target="_blank">
+              <?= $claim['insurerName'] ?></a></p>
           </div>
-          <div class="col-lg-3 adjuster">
+          <div class="col-lg-2 adjuster">
             <p>Rick Makowski</p>
-          </div>                    
+          </div>
+          <div class="col-lg-2 claim-age">
+            <p><?php
+                $now = new DateTime();
+                $oldDate = new DateTime($claim['dateReported']);
+                echo ($now->diff($oldDate)->days . ' Days');
+                ?></p>
+          </div>                          
         </div><!-- end row claims-list -->        
         <?php
           }
-          $database = new Database();
-        ?>
+         ?>
       </div><!-- end row claim-list">
     </div><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/jquery-1-11-3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
   </body>

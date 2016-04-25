@@ -6,5 +6,36 @@ body {
 	vertical-align: center;
 }
 .well {
-	font-weight: bold;
+	font-weight: normal;
+}
+.insured-claim-details h3 {
+	text-align: center;
+}
+.insured-claim-details .insured-details {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	font-size: larger;
+	padding: 0px 25px 5px 25px;
+}
+.insured-claim-details .claim-details {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	font-size: larger;
+	padding: 0px 25px 5px 25px;
+}
+.claim-label {
+	text-decoration: underline;
+	font-weight: bolder;
+}
+.insurer-details .well {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	font-size: largest;
+	padding: 10px 25px 0px 25px;
+}
+.loss-details .well {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	font-size: largest;
+	padding: 10px 25px 0px 25px;
 }

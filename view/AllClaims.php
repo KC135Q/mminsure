@@ -3,8 +3,6 @@
   include "../config/config.php";
   include "../model/database.php";
   $database = new Database();
-  $addedID = $database->lastInsertId();
-  $insured = $database->getInsured($addedID);
 ?>
 <html lang="en">
   <head>
@@ -12,13 +10,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Insured Added</title>
+    <title>M&amp;M All Claims</title>
 
     <!-- Bootstrap -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="/mminsurance.com/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Override -->
-    <link href="../css/bootstrap-override.css" rel="stylesheet">
+    <link href="/mminsurance.com/css/bootstrap-override.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,57 +71,88 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-
-    <!-- End Nav Section -->
-
+    <!--++++++++++++++++++++++++++++++++++++++++-->
+    <!--                                        -->
+    <!--            End Nav Section             -->
+    <!--                                        -->
+    <!--++++++++++++++++++++++++++++++++++++++++-->
     <div class="row well well-sm">
-      <h1>M&amp;M Insured Added</h1>
+      <h1>M&amp;M All Claims</h1>
     </div><!-- end row well well-sm -->
-      <ul class="list-group col-lg-6">
-        <li class="list-group-item">
-          <span class="badge">Name</span>
-          <?php
-            if (strlen($insured["firstName"]) > 0) {
-              echo ($insured["firstName"].' ');    
-            }
-            echo ($insured["lastName"]);
-           ?>
-        </li>
-        <li class="list-group-item">
-          <span class="badge">Phone</span>
-          <?=$insured["phone"]?>
-        </li>
-        <li class="list-group-item">
-          <span class="badge">Cell</span>
-          <?=$insured["cell"]?>
-        </li>
-        <li class="list-group-item">
-          <span class="badge">Email address</span>
-          <?=$insured["email"]?>
-        </li>
-        <li class="list-group-item">
-          <span class="badge">Address</span>
+      <div class="row claim-list">
+        <h3>All Claims</h3>
+        <div class="row open-claims well well-sm">
+          <div class="col-lg-1 claim-number">
+            <p>Number</p>
+          </div>
+          <div class="col-lg-1 date-of-loss">
+            <p>Loss date</p>
+          </div>
+          <div class="col-lg-1 date-claimed">
+            <p>Claim date</p>
+          </div>
+          <div class="col-lg-2 insured">
+            <p>Insured</p>
+          </div>                          
+          <div class="col-lg-2 insurer">
+            <p>Insurer</p>
+          </div>
+          <div class="col-lg-2 adjuster">
+            <p>Adjuster</p>
+          </div>
+          <div class="col-lg-2 claim-age">
+            <p>Claim age</p>
+          </div>                   
+        </div><!-- end row open-claims -->
+        <?php
+          $openClaims = $database->getClaimsByStatus();
+          if (empty ($openClaims)) {
+          ?>
+            <div class="row no-claims col-lg-12">
+              <h3>No claims at this time.</h3>
+            </div>
           <?php 
-            echo ($insured["address"].' '.$insured["city"].', '.$insured["state"].', '.$insured["postcode"]);
-           ?>
-        </li>
-        <li class="list-group-item">
-          <span class="badge">County</span>
-          <?=$insured["county"]?>
-        </li>
-        <li class="list-group-item">
-          <span class="badge">Country</span>
-          <?=$insured["country"]?>
-        </li>
-        <li class="list-group-item">
-          <span class="badge">Notes</span>
-          <?=$insured["notes"]?>
-        </li>        
-      </ul>
+          }
+          foreach ($openClaims as $claim) {
+            // echo("<pre>");
+            // var_dump($claim);
+        ?>
+        <div class="row claims-list ">
+          <div class="col-lg-1 claim-number">
+            <p><a href="#"><?= $claim['claimID'] ?></a></p>
+          </div>
+          <div class="col-lg-1 date-of-loss">
+            <p><?= date('m/d/Y' ,strtotime($claim['dateOfLoss'])) ?></p>
+          </div>
+          <div class="col-lg-1 date-claimed">
+            <p><?= date('m/d/Y' ,strtotime($claim['dateReported'])) ?></p>
+          </div>
+          <div class="col-lg-2 insured">
+            <p><?= $claim['lastName'] . ' ' . $claim['firstName'] ?></p>
+          </div>                           
+          <div class="col-lg-2 insurer">
+            <p><a href="<?= $claim['insuerWebsite'] ?>" target="_blank">
+              <?= $claim['insurerName'] ?></a></p>
+          </div>
+          <div class="col-lg-2 adjuster">
+            <p>Rick Makowski</p>
+          </div>
+          <div class="col-lg-2 claim-age">
+            <p><?php
+                $now = new DateTime();
+                $oldDate = new DateTime($claim['dateReported']);
+                echo ($now->diff($oldDate)->days . ' Days');
+                ?></p>
+          </div>                          
+        </div><!-- end row claims-list -->        
+        <?php
+          }
+         ?>
+      </div><!-- end row claim-list">
     </div><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../js/jquery-1-11-3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/mminsurance.com/js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>

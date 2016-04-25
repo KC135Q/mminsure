@@ -6,10 +6,50 @@
 
   # Check form submitted?
   if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    # process form
-    $database->addInsurer($_POST);
-    # Add validation later, but for now just redirect
-    header('Location: InsurerAdded.php');
+    /**
+    * Builds a file path with the appropriate directory separator.
+    * @param string $segments,... unlimited number of path segments
+    * @return string Path
+    */
+    function file_build_path(...$segments) {
+        return join(DIRECTORY_SEPARATOR, $segments);
+    }
+    if (empty ($_POST['claimID'])) {
+      $claimID = '111';
+    } else {
+      $claimID = $_POST['claimID'];
+    }
+    $uploaddir = file_build_path("C:", "xampp", "htdocs", "mminsurance.com", "uploads", $claimID);
+    try {
+      mkdir($uploaddir, 7777);      
+    } catch (Exception $e) {
+      # Directory already exists - OK then
+    }
+
+    $uploadfile = ($uploaddir. '\\'. basename($_FILES['userfile']['name']));
+
+    try {
+      move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
+      $attachmentName = basename($_FILES['userfile']['name']);
+      $attachmentDescription = $_POST['attachmentDescription'];
+      $database->addAttachment($claimID, $attachmentName, $attachmentDescription);
+      header('Location: AttachmentAdded.php?claimID='. $claimID);      
+    } catch (Exception $e) {
+      $strError = "File upload error ". $e;
+    }    
+  } elseif(empty($_GET['claimID'])) {
+    # Incorrect url structure so send them back to the home page
+    header('Location: http://localhost/mminsurance.com/');
+  } else {
+    # first time visitor so show the form
+    try {
+      $claim = $database->getClaim($_GET['claimID']);
+      if (empty($claim)) {
+        throw new Exception('Claim table for claim id '. $_GET['claimID'] .' not found!');
+      }
+    } catch (Exception $e) {
+      $strError = "Error found: ". $e;
+    }
   }
 ?>
 <html lang="en">
@@ -18,13 +58,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Add Insurance Company</title>
+    <title>Add Attachment</title>
 
     <!-- Bootstrap -->
-    <link href="http://localhost/mminsurance.com//css/bootstrap.min.css" rel="stylesheet">
+    <link href="/mminsurance.com/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Override -->
-    <link href="http://localhost/mminsurance.com//css/bootstrap-override.css" rel="stylesheet">
+    <link href="/mminsurance.com/css/bootstrap-override.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,7 +87,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/mminsurance.com/index.php">
-            <img src="http://localhost/mminsurance.com//images/MM-Logo.png" height='30px' width='30px' alt="M&amp;M Logo">
+            <img src="../images/MM-Logo.png" height='30px' width='30px' alt="M&amp;M Logo">
           </a>
         </div>
 
@@ -79,59 +119,36 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+    <!--++++++++++++++++++++++++++++++++++++++++-->
+    <!--                                        -->
+    <!--            End Nav Section             -->
+    <!--                                        -->
+    <!--++++++++++++++++++++++++++++++++++++++++-->
     <div class="row well well-sm">
-      <h1>M&amp;M Add Insurance Company</h1>
+      <h1>M&amp;M Add Attachment</h1>
+      <h3>Claim Number: <?= $claim['claimID'] ?></h3>
     </div><!-- end row well well-sm -->
-      <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
-        <div class="form-group col-lg-6">
-          <label for="insurerName">Business Name</label>
-          <input type="text" class="form-control" id="insurerName" name="insurerName" placeholder="Amce Insurance Company">
-        </div>     
-        <div class="form-group col-lg-6">
-          <label for="insurerRep">Full Name of Business Representative</label>
-          <input type="text" class="form-control" id="insurerRep" name="insurerRep" placeholder="Mr. John Doe">
-        </div> 
+    <!-- The data encoding type, enctype, MUST be specified as below -->
+    <form enctype="multipart/form-data" action="AddAttachment.php" method="POST">
+      <!-- MAX_FILE_SIZE must precede the file input field -->
+      <input type="hidden" name="MAX_FILE_SIZE" value="500000" />
+      <!-- Keep track of the claim id to associate the attachment with -->
+      <input type="hidden" name="claimID" value="<?=$claim['claimID']?>">
+      <!-- Name of input element determines name in $_FILES array -->
+      <div class="row">
         <div class="form-group col-lg-4">
-          <label for="insurerPhone">Phone</label>
-          <input type="tel" class="form-control" id="insurerPhone" name="insurerPhone" placeholder="800-555-1212">
-        </div>          
+          <label for="userfile">Attachment File</label>    
+          <input name="userfile" type="file" class="form-control" id="userfile">
+        </div>
+      </div><!-- end row -->
+      <div class="row">
         <div class="form-group col-lg-4">
-          <label for="insurerEmail">Email Address</label>
-          <input type="email" class="form-control" id="insurerEmail" name="insurerEmail" placeholder="J.Doe@AMCE.com">
+          <label for="attachmentDescription">Attachment Description</label>
+          <input type="text" class="form-control" id="attachmentDescription" name="attachmentDescription" placeholder="Damaged area taken from the North.">
         </div>
-        <div class="form-group col-lg-4">
-          <label for="insurerWebsite">Company Website</label>
-          <input type="text" class="form-control" id="insurerWebsite" name="insurerWebsite" placeholder="www.amce.com">
-        </div>        
-        <div class="form-group col-lg-4">
-          <label for="insurerAddress">Street Address</label>
-          <input type="text" class="form-control" id="insurerAddress" name="insurerAddress" placeholder="123 Main Street">
-        </div>
-        <div class="form-group col-lg-4">
-          <label for="insurerCity">City</label>
-          <input type="text" class="form-control" id="insurerCity" name="insurerCity" placeholder="Anytown">
-        </div> 
-        <div class="form-group col-lg-4">
-          <label for="insurerState">State</label>
-          <input type="text" class="form-control" id="insurerState" name="insurerState" placeholder="Florida">
-        </div>
-        <div class="form-group col-lg-3">
-          <label for="insurerCountry">Country</label>
-          <input type="text" class="form-control" id="insurerCountry" name="insurerCountry" placeholder="United States">
-        </div>
-        <div class="form-group col-lg-3">
-          <label for="insurerPostcode">Zip/Postcode</label>
-          <input type="text" class="form-control" id="insurerPostcode" name="insurerPostcode" placeholder="12345">
-        </div>
-        <div class="form-group col-lg-12">        
-          <label for="insurerNotes">Additional Details</label>
-          <input type="text" class="form-control" id="insurerNotes" name="insurerNotes" placeholder="Boots, boots, marching up and down again.">
-        </div>
-        <div class="form-group col-lg-12">        
-          <button type="submit" class="btn btn-default">Add Insurance Company</button>
-        </div>                                       
-
-      </form>    
+      </div><!-- end row --> 
+      <input type="submit" value="Send File" />
+    </form>  
     </div><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../js/jquery-1-11-3.min.js"></script>

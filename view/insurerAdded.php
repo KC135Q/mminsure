@@ -4,7 +4,7 @@
   include "../model/database.php";
   $database = new Database();
   $addedID = $database->lastInsertId();
-  $insured = $database->getInsurer($addedID);
+  $insurer = $database->getInsurer($addedID);
 ?>
 <html lang="en">
   <head>
@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Insured Added</title>
+    <title>Insurer Added</title>
 
     <!-- Bootstrap -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -48,7 +48,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#">General Claims</a></li>
+            <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">All Claims</a></li>
             <li><a href="#">Attachment</a></li>
             <li><a href="#">Time</a></li>
           </ul>
@@ -74,48 +74,48 @@
       </div><!-- /.container-fluid -->
     </nav>
     <div class="row well well-sm">
-      <h1>M&amp;M Insured Added</h1>
+      <h1>M&amp;M Insurer Added</h1>
     </div><!-- end row well well-sm -->
       <ul class="list-group col-lg-6">
         <li class="list-group-item">
           <span class="badge">Business Name</span>
-          <?=$insured["businessName"]?>
+          <?=$insurer["insurerName"]?>
         </li>
         <li class="list-group-item">
           <span class="badge">Business Representative</span>
-          <?=$insured["repName"]?>
+          <?=$insurer["insurerRep"]?>
         </li>        
         <li class="list-group-item">
           <span class="badge">Phone</span>
-          <?=$insured["phone"]?>
+          <?=$insurer["insurerPhone"]?>
         </li>
 
         <li class="list-group-item">
-          <span class="badge">Email address</span>
-          <?=$insured["email"]?>
+          <span class="badge">insurerEmail insurerAddress</span>
+          <?=$insurer["insurerEmail"]?>
         </li>
         <li class="list-group-item">
           <span class="badge">Website</span>
-          <a href='<?=$insured["website"]?>' target="_blank"><?=$insured["website"]?></a>
+          <a href='<?=$insurer["insurerWebsite"]?>' target="_blank"><?=$insurer["insurerWebsite"]?></a>
         </li>        
         <li class="list-group-item">
-          <span class="badge">Address</span>
+          <span class="badge">insurerAddress</span>
           <?php 
-            echo ($insured["address"].' '.$insured["city"].', '.$insured["state"].', '.$insured["postcode"]);
+            echo ($insurer["insurerAddress"].' '.$insurer["insurerCity"].', '.$insurer["insurerState"].', '.$insurer["insurerPostcode"]);
            ?>
         </li>
         <li class="list-group-item">
-          <span class="badge">Country</span>
-          <?=$insured["country"]?>
+          <span class="badge">insurerCountry</span>
+          <?=$insurer["insurerCountry"]?>
         </li>
         <li class="list-group-item">
           <span class="badge">Additional Details</span>
-          <?=$insured["notes"]?>
+          <?=$insurer["insurerNotes"]?>
         </li>
       </ul>
     </div><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../js/jquery-1-11-3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/mminsurance.com/js/bootstrap.min.js"></script>
   </body>

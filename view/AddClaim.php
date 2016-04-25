@@ -58,7 +58,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#">General Claims</a></li>
+            <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">All Claims</a></li>
             <li><a href="#">Attachment</a></li>
             <li><a href="#">Time</a></li>
           </ul>
@@ -112,7 +112,7 @@
           <select type="text" class="form-control" id="insurerID" name="insurerID">
             <?php
               foreach($insurerList as $insurerCompany) {
-                echo("<option value='". $insurerCompany['insurerID'] ."'>". $insurerCompany['businessName'] . " ". $insurerCompany['address'] ."</option>\n");
+                echo("<option value='". $insurerCompany['insurerID'] ."'>". $insurerCompany['insurerName'] . " ". $insurerCompany['insurerAddress'] ."</option>\n");
               }
             ?>
           </select>
@@ -164,14 +164,14 @@
         <div class="form-group col-lg-6">
           <label for="lossNotes">Any additional details</label>
           <input type="text" class="form-control" id="lossNotes" name="lossNotes" placeholder="Notes go here">
-        </div                       
+        </div>                     
         <div class="form-group col-lg-12">        
           <button type="submit" class="btn btn-default">Add Claim</button>
         </div> 
       </form>    
     </div><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../js/jquery-1-11-3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/mminsurance.com/js/bootstrap.min.js"></script>
   </body>
