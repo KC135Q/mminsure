@@ -114,6 +114,12 @@
 			$rows = $this->resultset();
 			return $rows;
 		}
+		public function getAttachments($claimID) {
+			$this->query('SELECT * FROM attachment WHERE claimID = :claimID');
+			$this->bind(':claimID', $claimID);
+			$rows = $this->resultset();
+			return $rows;	
+		}
 		public function getClaim($claimID) {
 			# This only retrieves the claim info from the matching claim table
 			$this->query('SELECT DISTINCT * FROM claim WHERE claimID = :claimID');

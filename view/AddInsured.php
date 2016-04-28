@@ -132,7 +132,7 @@
           <input type="notes" class="form-control" id="notes" name="notes" placeholder="Boots, boots, marching up and down again.">
         </div> 
         <div class="form-group col-lg-12">        
-          <button type="submit" class="btn btn-default">Add Insured</button>
+          <button type="submit" class="btn btn-info">Add Insured</button>
         </div> 
       </form>    
     </div><!-- end container -->

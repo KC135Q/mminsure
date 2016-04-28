@@ -147,7 +147,7 @@
           <input type="text" class="form-control" id="attachmentDescription" name="attachmentDescription" placeholder="Damaged area taken from the North.">
         </div>
       </div><!-- end row --> 
-      <input type="submit" value="Send File" />
+      <input type="submit" value="Send File" class="btn btn-info"/>
     </form>  
     </div><!-- end container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

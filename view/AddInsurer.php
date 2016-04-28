@@ -128,7 +128,7 @@
           <input type="text" class="form-control" id="insurerNotes" name="insurerNotes" placeholder="Boots, boots, marching up and down again.">
         </div>
         <div class="form-group col-lg-12">        
-          <button type="submit" class="btn btn-default">Add Insurance Company</button>
+          <button type="submit" class="btn btn-info">Add Insurance Company</button>
         </div>                                       
 
       </form>    

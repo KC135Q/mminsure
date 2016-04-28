@@ -39,3 +39,47 @@ body {
 	font-size: largest;
 	padding: 10px 25px 0px 25px;
 }
+.photo-sheet img {
+	max-height: 200px;
+	max-width: 200px;
+}
+.sheet-prep img {
+	max-width : 75%;
+}
+.sheet-prep {
+	background-color: white;
+	min-height: 400px;
+}
+.sheet-prep img {
+	max-width: 400px;
+	padding: 10px;
+}
+#draggable { 
+}
+#droppable { 
+}
+
+@media print {
+	body {
+		background-color: yellow;
+		column-count: 2;
+		column-gap: 1em;
+		column-rule: 1pt solid grey;
+		padding-bottom: 40px;
+	}	
+	header nav, footer {
+		display: none;
+	}
+	img {
+	  max-width: 80%;
+	}
+	@page {
+		margin: 0.5cm;
+	}
+	.print-attachments {
+		text-align: center;
+	}
+	.print-header {
+		font-family: 'Times New Roman';
+	}
+}

@@ -166,7 +166,7 @@
           <input type="text" class="form-control" id="lossNotes" name="lossNotes" placeholder="Notes go here">
         </div>                     
         <div class="form-group col-lg-12">        
-          <button type="submit" class="btn btn-default">Add Claim</button>
+          <button type="submit"  class="btn btn-info">Add Claim</button>
         </div> 
       </form>    
     </div><!-- end container -->
