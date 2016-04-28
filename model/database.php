@@ -104,6 +104,15 @@
 			}
 			$this->execute();
 		}
+
+		public function changeStatus($claimID) {
+			$this->query("UPDATE claim SET status = CASE WHEN status = 'Closed' THEN 'Open' WHEN status = 'Open' THEN 'Closed' END WHERE claimID = :claimID");
+			$this->bind("claimID", $claimID);
+			$this->execute();
+			$this->query("SELECT status FROM claim WHERE claimID = :claimID");
+			$this->bind("claimID", $claimID);
+			return $this->single();
+		}
 		public function getAllInsured() {
 			$this->query('SELECT * FROM insured');
 			$rows = $this->resultset();

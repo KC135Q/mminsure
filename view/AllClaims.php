@@ -47,15 +47,12 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">All Claims</a></li>
-            <li><a href="#">Attachment</a></li>
-            <li><a href="#">Time</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quick Actions <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="http://localhost/mminsurance.com/view/AddClaim.php">Add Claim</a></li>
-                <li><a href="#">Add Attachment</a></li>
                 <li role="separator" class="divider"></li>                
                 <li><a href="http://localhost/mminsurance.com/view/AddInsured.php">Add Insured</a></li>
                 <li><a href="http://localhost/mminsurance.com/view/AddInsurer.php">Add Insurance Company</a></li>
@@ -97,29 +94,27 @@
           <div class="col-lg-2 insurer">
             <p>Insurer</p>
           </div>
-          <div class="col-lg-2 adjuster">
-            <p>Adjuster</p>
+          <div class="col-lg-2 claim-status">
+            <p>Status</p>
           </div>
           <div class="col-lg-2 claim-age">
             <p>Claim age</p>
           </div>                   
         </div><!-- end row open-claims -->
         <?php
-          $openClaims = $database->getClaimsByStatus();
-          if (empty ($openClaims)) {
+          $allClaims = $database->getClaimsByStatus();
+          if (empty ($allClaims)) {
           ?>
             <div class="row no-claims col-lg-12">
               <h3>No claims at this time.</h3>
             </div>
           <?php 
           }
-          foreach ($openClaims as $claim) {
-            // echo("<pre>");
-            // var_dump($claim);
+          foreach ($allClaims as $claim) {
         ?>
         <div class="row claims-list ">
           <div class="col-lg-1 claim-number">
-            <p><a href="#"><?= $claim['claimID'] ?></a></p>
+            <p><a href="http://localhost/mminsurance.com/view/ClaimDetails.php?claimID=<?=$claim['claimID']?>"><?= $claim['claimID'] ?></a></p>
           </div>
           <div class="col-lg-1 date-of-loss">
             <p><?= date('m/d/Y' ,strtotime($claim['dateOfLoss'])) ?></p>
@@ -134,8 +129,8 @@
             <p><a href="<?= $claim['insuerWebsite'] ?>" target="_blank">
               <?= $claim['insurerName'] ?></a></p>
           </div>
-          <div class="col-lg-2 adjuster">
-            <p>Rick Makowski</p>
+          <div class="col-lg-2 claim-status">
+            <p><?= $claim['status'] ?></p>
           </div>
           <div class="col-lg-2 claim-age">
             <p><?php

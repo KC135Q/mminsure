@@ -46,7 +46,6 @@
 		<!-- Title row has a left column and right column.  Left is basically a header and the right contains the Insurance Company information -->
 		<div class="col-xs-6 print-header">
 			<span class='h3'>Photo Sheet</span><br>
-			<span class='h3'>M&amp;M Insurance Investigation Services, LLC</span>
 		</div><!-- end print-header -->
 		<div class="col-xs-6 print-insurer">
 			<?php echo $insurerString; ?>

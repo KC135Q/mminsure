@@ -67,8 +67,8 @@
           <ul class="nav navbar-nav">
             <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">All Claims</a></li>
             <li><a href="http://localhost/mminsurance.com/view/AddAttachment.php?claimID=<?=$claim['claimID']?>">Add Attachment</a></li>
-            <li><a href="#">Time</a></li>
-            <li><a href="http://localhost/mminsurance.com/view/PhotoSheet.php?claimID=<?=$claim['claimID']?>">Photo Sheet</a></li>           
+            <li><a href="http://localhost/mminsurance.com/view/AddTime.php?claimID=<?=$claim['claimID']?>">Add Time</a></li>
+            <li><a href="http://localhost/mminsurance.com/view/PhotoSheet.php?claimID=<?=$claim['claimID']?>">Create Photo Sheet</a></li>           
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -142,13 +142,14 @@
         <h3>Claim Details</h3>
           <div class="row well">
             <?php
-              $rowString = "<span class='claim-label'>Claim Number</span> ". $claim['claimID'];
-              echo $rowString;
+              echo ("<span class='claim-label'>Claim Number</span> ");
+              echo ("<span id='claimID'>" . $claim['claimID'] . "</span>");
             ?>
             <br>
             <?php
-              $rowString = '<span class="claim-label">Status</span> ' . $claim['status'];
+              $rowString = '<span class="claim-label">Status</span><span id="claim-status"> ' . $claim['status'] . '</span>';
               echo $rowString;
+              echo ("<span class='badge pull-right claim-status'>Change Status</span>");
             ?>
             <br>
             <?php
@@ -217,5 +218,21 @@
     <script src="../js/jquery-1-11-3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/mminsurance.com/js/bootstrap.min.js"></script>
+    <!-- Page specific javascript -->
+    <script>
+      $(document).ready(function() {
+        $('.claim-status').on('click',  function() {
+          console.log("clicked");
+          var claimID = document.getElementById("claimID").textContent;
+          var jqxhr = $.ajax("../controller/ChangeStatus.php?claimID="+claimID)
+          .success(function() {
+            console.log("Accessed the file");
+            $('#claim-status').replaceWith ("<span id='claim-status'> " + (jqxhr.responseText) + "</span>");
+            console.log(jqxhr.responseText);
+          });
+        });
+      });
+    </script>
   </body>
 </html>
+
