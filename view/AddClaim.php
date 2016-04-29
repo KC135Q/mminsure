@@ -8,8 +8,10 @@
   if($_SERVER['REQUEST_METHOD'] == 'POST') {
     # process form
     $database->addClaim($_POST);
+    $currentID = $database->getLastClaimIDEntered();
+    # var_dump($_POST);
     # Add validation later, but for now just redirect
-    header('Location: ClaimAdded.php');
+    header('Location: ClaimDetails.php?claimID='.$currentID['claimID']);
   } else {
     # first time visitor so show the form
     $insuredList = $database->getAllInsured();
@@ -59,16 +61,12 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">All Claims</a></li>
-            <li><a href="#">Attachment</a></li>
-            <li><a href="#">Time</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quick Actions <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="http://localhost/mminsurance.com/view/AddClaim.php">Add Claim</a></li>
-                <li><a href="#">Add Attachment</a></li>
-                <li role="separator" class="divider"></li>                
+                <li><a href="http://localhost/mminsurance.com/view/AddClaim.php">Add Claim</a></li>           
                 <li><a href="http://localhost/mminsurance.com/view/AddInsured.php">Add Insured</a></li>
                 <li><a href="http://localhost/mminsurance.com/view/AddInsurer.php">Add Insurance Company</a></li>
               </ul>
@@ -135,7 +133,7 @@
         </div>
         <div class="form-group col-lg-6">
           <label for="timeOfLoss">Time of loss</label>
-          <input type="time" class="form-control" id="timeOfLoss" name="timeOfLoss" placeholder="6:45pm">
+          <input type="time" class="form-control" id="timeOfLoss" name="timeOfLoss" placeholder="01:30 AM">
         </div>
         <div class="form-group col-lg-6">
           <label for="grossLossValue">Gross Loss Value</label>

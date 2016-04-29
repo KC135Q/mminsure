@@ -80,6 +80,9 @@
 			$this->execute();					
 		}			
 		public function addClaim($inputs) {
+			if (strlen($inputs['timeOfLoss']) < 1) {
+				$inputs['timeOfLoss'] = "13:30";
+			}
 			$claimArray = array("insuredID", "insurerID", "policyNumber", "insurerClaimNumber", "dateOfLoss", "dateReported", "timeOfLoss", "grossLossValue", "actualCashValue", "replacementCost", "lossDescription", "lossLocation", "lossCounty", "lossNotes");
 			$this->query('INSERT INTO claim (insurerID, insuredID, policyNumber, insurerClaimNumber, dateOfLoss, dateReported, timeOfLoss, grossLossValue, actualCashValue, replacementCost, lossDescription, lossLocation, lossCounty, lossNotes) VALUES (:insurerID, :insuredID, :policyNumber, :insurerClaimNumber, :dateOfLoss, :dateReported, :timeOfLoss, :grossLossValue, :actualCashValue, :replacementCost, :lossDescription, :lossLocation, :lossCounty, :lossNotes) ');
 			foreach ($claimArray as $key) {
@@ -104,7 +107,14 @@
 			}
 			$this->execute();
 		}
-
+  	public function addTime($inputs) {
+  		$timeArray = array("claimID", "timeSpent", "timeActivity", "timeDisbursementAmount", "timeTaxable", "timeDisbursementType", "timeNotes", "timeBillable");
+  		$this->query('INSERT INTO timesheet (claimID, timeSpent, timeActivity, timeDisbursementAmount, timeTaxable, timeDisbursementType, timeNotes, timeBillable) VALUES (:claimID, :timeSpent, :timeActivity, :timeDisbursementAmount, :timeTaxable, :timeDisbursementType, :timeNotes, :timeBillable) ');
+			foreach ($timeArray as $key) {
+				$this->bind(":$key", "$inputs[$key]");
+			}  		
+  		$this->execute();
+  	}
 		public function changeStatus($claimID) {
 			$this->query("UPDATE claim SET status = CASE WHEN status = 'Closed' THEN 'Open' WHEN status = 'Open' THEN 'Closed' END WHERE claimID = :claimID");
 			$this->bind("claimID", $claimID);
@@ -120,6 +130,12 @@
 		}
 		public function getAllInsurer() {
 			$this->query('SELECT * FROM insurer');
+			$rows = $this->resultset();
+			return $rows;
+		}
+		public function getAllTimes($claimID) {
+			$this->query('SELECT * FROM timesheet WHERE claimID = :claimID ORDER BY timeStamp DESC');
+			$this->bind(':claimID', $claimID);
 			$rows = $this->resultset();
 			return $rows;
 		}
@@ -166,5 +182,9 @@
 			}
 			$rows = $this->resultset();
 			return $rows;
+		}
+		public function getLastClaimIDEntered() {
+			$this->query('SELECT claimID FROM claim ORDER BY claimID DESC LIMIT 1');
+			return $this->single();
 		}
   }

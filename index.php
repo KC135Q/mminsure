@@ -131,8 +131,7 @@
             <p><?= $claim['lastName'] . ' ' . $claim['firstName'] ?></p>
           </div>                           
           <div class="col-lg-3 insurer">
-            <p><a href="<?= $claim['insurerWebsite'] ?>" target="_blank">
-              <?= $claim['insurerName'] ?></a></p>
+            <p><?= $claim['insurerName'] ?></p>
           </div>
           <div class="col-lg-2 adjuster">
             <p>Rick Makowski</p>

@@ -55,16 +55,12 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">All Claims</a></li>
-            <li><a href="#">Attachment</a></li>
-            <li><a href="#">Time</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quick Actions <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="http://localhost/mminsurance.com/view/AddClaim.php">Add Claim</a></li>
-                <li><a href="#">Add Attachment</a></li>
-                <li role="separator" class="divider"></li>                
+                <li><a href="http://localhost/mminsurance.com/view/AddClaim.php">Add Claim</a></li>                
                 <li><a href="http://localhost/mminsurance.com/view/AddInsured.php">Add Insured</a></li>
                 <li><a href="http://localhost/mminsurance.com/view/AddInsurer.php">Add Insurance Company</a></li>
               </ul>

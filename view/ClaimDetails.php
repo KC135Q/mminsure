@@ -14,6 +14,7 @@
   } else {
     # first time visitor so show the form
     try {
+      $claimID = $_GET['claimID'];
       $claim = $database->getClaimDetails($_GET['claimID']);
       if (empty($claim)) {
         throw new Exception('Claim, insured, or insurer not found!');
@@ -66,9 +67,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">All Claims</a></li>
-            <li><a href="http://localhost/mminsurance.com/view/AddAttachment.php?claimID=<?=$claim['claimID']?>">Add Attachment</a></li>
-            <li><a href="http://localhost/mminsurance.com/view/AddTime.php?claimID=<?=$claim['claimID']?>">Add Time</a></li>
-            <li><a href="http://localhost/mminsurance.com/view/PhotoSheet.php?claimID=<?=$claim['claimID']?>">Create Photo Sheet</a></li>           
+            <li><a href="http://localhost/mminsurance.com/view/AddAttachment.php?claimID=<?= $claimID; ?>">Add Attachment</a></li>
+            <li><a href="http://localhost/mminsurance.com/view/AddTime.php?claimID=<?= $claimID; ?>">Timesheet</a></li>
+            <li><a href="http://localhost/mminsurance.com/view/PhotoSheet.php?claimID=<?= $claimID; ?>">Create Photo Sheet</a></li>           
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -100,8 +101,9 @@
       <h1>M&amp;M Claim Details</h1>
     </div><!-- end row well well-sm -->
     <div class="row insured-claim-details">
-      <div class="col-lg-5 insured-details img-rounded">
-        <h3>Insured Details</h3>
+      <div class="col-lg-5 insured-details img-rounded  claim-details">
+        <h3>Insured Details
+        <a href="EditInsured.php?insuredID=<?= $claim['insuredID']; ?>">(edit)</a></h3>
           <div class="row well">
             <?php
               $rowString = $claim['lastName'];
@@ -139,7 +141,7 @@
           </div><!-- end row -->
       </div><!-- end insured-details -->
       <div class="col-lg-5 claim-details col-lg-offset-1 img-rounded">
-        <h3>Claim Details</h3>
+        <h3>Claim Details <a href="EditClaim.php?claimID=<?= $claimID; ?>">(edit)</a></h3>    
           <div class="row well">
             <?php
               echo ("<span class='claim-label'>Claim Number</span> ");
@@ -173,15 +175,13 @@
           </div><!-- end row -->
       </div><!-- end insured-details -->      
     </div><!-- end row insured-claim-details -->
-    <div class="row insurer-details col-lg-12 ">
-      <h3>Insurer Details</h3>
+    <div class="row insurer-details  claim-details col-lg-12 img-rounded">
+      <h3>Insurer Details <a href="EditInsurer.php?insurerID=<?= $claim['insurerID']; ?>">(edit)</a></h3>
         <div class="row well">
           <div class="col-lg-6">
             <?php
-              $rowString = "<h3><a href='". $claim['insurerWebsite'] ."' target='_blank'>". $claim['insurerName'] ."</a></h3>";
-              echo $rowString;
-            ?>
-            <br>
+              echo "<span class='h3'>". $claim['insurerName'] ."</span>";
+            ?>   
           </div><!-- end column -->
           <div class="col-lg-6">
             <?php
@@ -203,14 +203,61 @@
           </div><!-- end column -->   
        </div><!-- end row -->
     </div><!-- end row insurer-details -->
-    <div class="row loss-details col-lg-12">
-      <h3>Loss Details</h3>
+    <div class="row loss-details col-lg-12  claim-details">
+      <h3>Loss Details <a href="EditInsurer.php?claimID=<?= $claimID; ?>">(edit)</a></h3>
         <div class="row well">
-          <?php
-            $rowString = "<span class='claim-label'>Claim Number</span> ". $claim['claimID'];
-            echo $rowString;
-          ?>
-          <br>     
+          <div class="row top-half-loss">
+            <div class="col-lg-6 left-half-loss">
+              <div id="loss-date-reported">
+                <span class="claim-label">Date Reported:</span> 
+                <?= date('m/d/Y' ,strtotime($claim['dateReported'])); ?>
+              </div><!-- end loss-date-reported -->
+              <div id="loss-time">
+              <span class="claim-label">Time of Loss</span> <?= $claim['timeOfLoss']; ?>
+              </div><!-- end loss-time -->
+               <div id="loss-gross-value"><span class="claim-label">Gross Loss Value</span> <?= $claim['grossLossValue']; ?>
+              </div><!-- end loss-gross-value -->
+              <div id="loss-actual-value"><span class="claim-label">Actual Cash Value</span> <?= $claim['actualCashValue']; ?>
+              </div><!-- end loss-actual-value -->
+              <div id="loss-replacement-cost"><span class="claim-label">Replacement Cost</span> <?= $claim['replacementCost']; ?>
+              </div><!-- end loss-replacement-cost -->
+              <div id="loss-date"><span class="claim-label">Date of Loss</span>
+                <?= date('m/d/Y' ,strtotime( $claim['dateOfLoss'])); ?>
+              </div><!-- end loss-date -->
+            </div><!-- end left-half-loss -->
+            <div class="col-lg-6 right-half-loss">
+              <div id="loss-"><span class="claim-label">Loss Location</span> <?= $claim['lossLocation']; ?>
+              </div><!-- end loss- -->
+              <div id="loss-"><span class="claim-label">Loss County</span> <?= $claim['lossCounty']; ?>
+              </div><!-- end loss- -->
+              <div id="loss-"><span class="claim-label">Loss State</span> <?= $claim['lossState']; ?>
+              </div><!-- end loss- -->
+            </div><!-- end right-half-loss -->
+          </div><!-- end top-half-loss -->
+          <div class="row bottom-half-loss">
+            <div class="col-lg-12 full-bottom-half-loss">
+              <div id="loss-description">             
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Loss Description</h3>
+                  </div>
+                  <div class="panel-body">
+                    <?= $claim['lossDescription']; ?>
+                  </div>
+                </div>            
+              </div><!-- end loss-description -->
+              <div id="loss-notes">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Addtional Notes</h3>
+                  </div>
+                  <div class="panel-body">
+                    <?= $claim['lossNotes']; ?>
+                  </div>
+                </div>                
+              </div><!-- end loss-notes -->
+            </div><!-- end full-bottom-half-loss -->
+          </div><!-- end bottom-half-loss -->
         </div><!-- end row -->
     </div><!-- end row loss-details -->        
     </div><!-- end container -->
