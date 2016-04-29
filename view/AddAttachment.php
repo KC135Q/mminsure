@@ -128,7 +128,7 @@
     <!-- The data encoding type, enctype, MUST be specified as below -->
     <form enctype="multipart/form-data" action="AddAttachment.php" method="POST">
       <!-- MAX_FILE_SIZE must precede the file input field -->
-      <input type="hidden" name="MAX_FILE_SIZE" value="500000" />
+      <input type="hidden" name="MAX_FILE_SIZE" value="67108864" />
       <!-- Keep track of the claim id to associate the attachment with -->
       <input type="hidden" name="claimID" value="<?=$claim['claimID']?>">
       <!-- Name of input element determines name in $_FILES array -->
