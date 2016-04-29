@@ -16,8 +16,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">Show Claims</a></li>
-            <li><a href="http://localhost/mminsurance.com/view/ShowInsured.php">Show Insured</a></li>  
+            <li><a href="http://localhost/mminsurance.com/view/AllClaims.php">Claims</a></li>
+            <li><a href="http://localhost/mminsurance.com/view/ShowInsured.php">Insured</a></li>
+            <li><a href="http://localhost/mminsurance.com/view/ShowInsurer.php">Insurance Companies</a></li>            
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

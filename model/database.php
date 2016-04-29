@@ -203,4 +203,20 @@
 			$this->bind (":insuredID", $inputs['insuredID']);
 			$this->execute();		
 		}
+		public function updateInsurer($inputs) {
+			$insurerArray = array("insurerName", "insurerRep", "insurerPhone", "insurerEmail", "insurerWebsite", "insurerAddress", "insurerCity", "insurerState", "insurerCountry", "insurerPostcode", "insurerNotes");			
+			$myQuery  = 'UPDATE insurer SET ';
+			foreach ($insurerArray as $value) {
+				$myQuery .= "$value = :$value, ";
+			}
+			$myQuery = substr($myQuery, 0, -2); # Removes , and space from last entry
+			$myQuery .= ' WHERE insurerID = :insurerID';
+			$this->query($myQuery);
+			foreach ($insurerArray as $value) {
+				$this->bind(":$value", "$inputs[$value]");
+			}
+			# Add the id which isn't in the UPDATE portion
+			$this->bind (":insurerID", $inputs['insurerID']);
+			$this->execute();		
+		}		
   }
