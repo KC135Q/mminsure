@@ -187,4 +187,20 @@
 			$this->query('SELECT claimID FROM claim ORDER BY claimID DESC LIMIT 1');
 			return $this->single();
 		}
+		public function updateInsured($inputs) {
+			$insuredArray = array("lastName", "firstName", "phone", "cell", "email", "address", "city", "state", "county", "country", "postcode", "notes");			
+			$myQuery  = 'UPDATE insured SET ';
+			foreach ($insuredArray as $value) {
+				$myQuery .= "$value = :$value, ";
+			}
+			$myQuery = substr($myQuery, 0, -2); # Removes , and space from last entry
+			$myQuery .= ' WHERE insuredID = :insuredID';
+			$this->query($myQuery);
+			foreach ($insuredArray as $value) {
+				$this->bind(":$value", "$inputs[$value]");
+			}
+			# Add the id which isn't in the UPDATE portion
+			$this->bind (":insuredID", $inputs['insuredID']);
+			$this->execute();		
+		}
   }

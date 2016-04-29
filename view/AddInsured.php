@@ -94,7 +94,7 @@
         </div>    
         <div class="form-group col-lg-4">
           <label for="cell">Cell</label>
-          <input type="cell" class="form-control" id="cell" name="cell" placeholder="800-555-1212">
+          <input type="tel" class="form-control" id="cell" name="cell" placeholder="800-555-1212">
         </div>             
         <div class="form-group col-lg-4">
           <label for="email">Email address</label>
@@ -102,27 +102,27 @@
         </div>
         <div class="form-group col-lg-4">
           <label for="address">Street address</label>
-          <input type="address" class="form-control" id="address" name="address" placeholder="123 Main Street">
+          <input type="text" class="form-control" id="address" name="address" placeholder="123 Main Street">
         </div>
         <div class="form-group col-lg-4">
           <label for="city">City</label>
-          <input type="city" class="form-control" id="city" name="city" placeholder="Anytown">
+          <input type="text" class="form-control" id="city" name="city" placeholder="Anytown">
         </div> 
         <div class="form-group col-lg-4">
           <label for="state">State</label>
-          <input type="state" class="form-control" id="state" name="state" placeholder="Florida">
+          <input type="text" class="form-control" id="state" name="state" placeholder="Florida">
         </div>
         <div class="form-group col-lg-4">
           <label for="county">County</label>
-          <input type="county" class="form-control" id="county" name="county" placeholder="Seminole County">
+          <input type="text" class="form-control" id="county" name="county" placeholder="Seminole">
         </div>
         <div class="form-group col-lg-4">
           <label for="country">Country</label>
-          <input type="country" class="form-control" id="country" name="country" placeholder="United States">
+          <input type="text" class="form-control" id="country" name="country" placeholder="United States">
         </div>
         <div class="form-group col-lg-4">
           <label for="postcode">Zip/Postcode</label>
-          <input type="postcode" class="form-control" id="postcode" name="postcode" placeholder="12345">
+          <input type="text" class="form-control" id="postcode" name="postcode" placeholder="12345">
         </div>                  
         <div class="form-group col-lg-12">        
           <label for="notes">Additional Details</label>
