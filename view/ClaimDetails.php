@@ -26,28 +26,13 @@
 ?>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <?php include('../includes/HeadSection.php'); ?>
     <title>Claim Details</title>
-
-    <!-- Bootstrap -->
-    <link href="/mminsurance.com/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Override -->
-    <link href="/mminsurance.com/css/bootstrap-override.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
-    <div class="container">
+  <div class="container">
+
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -141,7 +126,7 @@
           </div><!-- end row -->
       </div><!-- end insured-details -->
       <div class="col-lg-5 claim-details col-lg-offset-1 img-rounded">
-        <h3>Claim Details <a href="EditClaim.php?claimID=<?= $claimID; ?>">(edit)</a></h3>    
+        <h3>Claim Details</h3>    
           <div class="row well">
             <?php
               echo ("<span class='claim-label'>Claim Number</span> ");
@@ -204,7 +189,7 @@
        </div><!-- end row -->
     </div><!-- end row insurer-details -->
     <div class="row loss-details col-lg-12  claim-details">
-      <h3>Loss Details <a href="EditInsurer.php?claimID=<?= $claimID; ?>">(edit)</a></h3>
+      <h3>Loss Details</h3>
         <div class="row well">
           <div class="row top-half-loss">
             <div class="col-lg-6 left-half-loss">
