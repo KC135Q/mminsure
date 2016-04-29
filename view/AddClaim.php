@@ -157,7 +157,7 @@
         </div>
         <div class="form-group col-lg-6">
           <label for="lossCounty">County loss occurred in</label>
-          <input type="text" class="form-control" id="lossCounty" name="lossCounty" placeholder="Seminole County">
+          <input type="text" class="form-control" id="lossCounty" name="lossCounty" placeholder="Seminole">
         </div>
         <div class="form-group col-lg-6">
           <label for="lossNotes">Any additional details</label>
